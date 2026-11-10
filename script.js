@@ -24,11 +24,11 @@ function placeTile(tileType, row, column) {
     tile = new Tile(tileType, row, column);
 
     newGame.gameArray[tile.row][tile.column] = tile.type;
-    console.log(winCheck.verticalCheck(tile))
+    console.log(winCheck.horizontalCheck(tile))
 }
 
 class winCheck {
-    static verticalCheck(tile) {
+    static horizontalCheck(tile) {
         const oneRow = newGame.gameArray[tile.row]
 
         for (const column of oneRow) {
