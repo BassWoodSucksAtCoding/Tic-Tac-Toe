@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Library</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="reset.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">   
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    
+    <script src="script.js" defer></script>
 </head>
 <body>
     <div id="content">
@@ -17,7 +19,7 @@
             <ul>
                 <li>
                     <img src="Images/account-box-multiple.svg" alt="dashboard-icon" width="30px" height="30px">
-                    <h1>Dashboard</h1>
+                    <h1>Library</h1>
                 </li>
             </ul>
             <div>
@@ -95,81 +97,66 @@
                 </div>
 
                 <div id="buttons">
-                    <button>New</button>
+                    <button command="show-modal" commandfor="my-dialog" id="New">New</button>
                     <button>Upload</button>
                     <button>Share</button>
+
+                    <dialog id="my-dialog">
+                        <div>
+                            <h2>Add new book to the library.</h2>
+                            <p style="color: rgb(187, 43, 43);">* indicates a required question<p>
+                        </div>
+                        
+
+                        <form id="dialogForm">
+                            <div>
+                                <label for="name">Name: *</label>
+                                <input type="text" id="name" name="name" maxlength="40" required>
+                            </div>
+
+                            <div>
+                                <label for="author">Author: *</label>
+                                <input type="text" id="author" name="author" maxlength="40" required>
+                            </div>
+
+                            <div>
+                                <label for="page-no">Number of Pages: *</label>
+                                <input type="number" id="page-no" name="page-no" required>
+                            </div>
+
+                            <div>
+                                <label for="desc">Description: *</label>
+                                <textarea id="desc" name="desc" rows="50" cols="4" maxlength="200" required> </textarea>
+                            </div>
+
+                            <div id="dialogButtons">
+                                <button type="submit" id="dialogSubmit">Submit</button>
+                                <button commandfor="my-dialog" command="close" id="dialogClose" type="button">Close</button>
+                            </div>
+                        </form>
+                    </dialog>
                 </div>
             </div>
 
             <div id="cards">
-                <h3>Your Projects</h3>
-                <div>
-                    <div class="card">
-                        <div class="card-text">
-                            <h4>Super Cool Project</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </div>
-                        <div class="card-icon">
-                            <img src="Images/star-plus-outline.svg" alt="card-icon" width="25px" height="25px">
-                            <img src="Images/eye-plus-outline.svg" alt="card-icon" width="25px" height="25px">
-                            <img src="Images/source-branch.svg" alt="card-icon" width="25px" height="25px">
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-text">
-                            <h4>Less Cool Project</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eget cursus tortor. Donec venenatis, quam euismod placerat imperdiet.</p>
-                        </div>
-                        <div class="card-icon">
-                            <img src="Images/star-plus-outline.svg" alt="card-icon" width="25px" height="25px">
-                            <img src="Images/eye-plus-outline.svg" alt="card-icon" width="25px" height="25px">
-                            <img src="Images/source-branch.svg" alt="card-icon" width="25px" height="25px">
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-text">
-                            <h4>Impossible App</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque congue lectus orci, sit amet sodales erat eleifend ut. Pellentesque habitant morbi tristique senectus et netus et malesuada fames.</p>
-                        </div>
-                        <div class="card-icon">
-                            <img src="Images/star-plus-outline.svg" alt="card-icon" width="25px" height="25px">
-                            <img src="Images/eye-plus-outline.svg" alt="card-icon" width="25px" height="25px">
-                            <img src="Images/source-branch.svg" alt="card-icon" width="25px" height="25px">
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-text">
-                            <h4>Easy Peasy App</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non sem luctus, molestie lectus ut, blandit erat. Fusce maximus neque sit amet tellus posuere elementum. Ut venenatis, enim at semper iaculis, purus neque sodales magna, quis dignissim diam lectus.</p>
-                        </div>
-                        <div class="card-icon">
-                            <img src="Images/star-plus-outline.svg" alt="card-icon" width="25px" height="25px">
-                            <img src="Images/eye-plus-outline.svg" alt="card-icon" width="25px" height="25px">
-                            <img src="Images/source-branch.svg" alt="card-icon" width="25px" height="25px">
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-text">
-                            <h4>Flexbox Basics</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tincidunt dapibus nulla in vestibulum. Maecenas.</p>
-                        </div>
-                        <div class="card-icon">
-                            <img src="Images/star-plus-outline.svg" alt="card-icon" width="25px" height="25px">
-                            <img src="Images/eye-plus-outline.svg" alt="card-icon" width="25px" height="25px">
-                            <img src="Images/source-branch.svg" alt="card-icon" width="25px" height="25px">
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-text">
-                            <h4>Money Maker</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu sagittis ex. Aenean id lorem quis est aliquet ultricies. Phasellus.</p>
-                        </div>
-                        <div class="card-icon">
-                            <img src="Images/star-plus-outline.svg" alt="card-icon" width="25px" height="25px">
-                            <img src="Images/eye-plus-outline.svg" alt="card-icon" width="25px" height="25px">
-                            <img src="Images/source-branch.svg" alt="card-icon" width="25px" height="25px">
-                        </div>
-                    </div>
+                <h3>Books</h3>
+                <div id="cardsDiv">
+                    
+                    
+                </div>
+            </div>
+
+            <div class="card" id="progenitor-card">
+                <div class="card-text">
+                    <h4>Template Book</h4>
+                    <h5>By: BassWood</h5>
+                    <p>Click "New" to add a new book.</p>
+                    <h6>Number of pages: -5</h6>
+                </div>
+                <div class="card-icon">
+                    <img src="Images/star-plus-outline.svg" alt="card-icon" width="25px" height="25px" class="save">
+                    <img src="Images/eye-plus-outline.svg" alt="card-icon" width="25px" height="25px" class="read">
+                    <img src="Images/trash-can-outline.svg" alt="card-icon" width="25px" height="25px" class="delete">
                 </div>
             </div>
         </div>

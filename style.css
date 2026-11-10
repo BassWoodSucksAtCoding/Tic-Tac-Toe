@@ -7,6 +7,8 @@
   --dark-primary-color: #181818;
 
   --white-svg: invert(100%) sepia(8%) saturate(32%) hue-rotate(332deg) brightness(108%) contrast(107%);
+
+  --box-shadow: 4px 4px 10px rgb(15, 15, 15);
 }
 
 .outfit-card {
@@ -51,6 +53,8 @@ img[src$=".svg"]  {
     grid-area: sidebar;
 
     padding: 20px;
+
+    box-shadow: var(--box-shadow);
 }
 
 
@@ -97,6 +101,7 @@ ul {
     align-items: center;
 
     padding: 0px 40px;
+
 }
 
 #header > #top-right,
@@ -126,16 +131,22 @@ ul {
     margin-right: 20px;
 }
 
+textarea,
 input {
     background-color: #3f3f3f;
     border: none;
     border-radius: 50px;
 
+    text-indent: 5px;
+}
+
+#top-left input {
     width: calc(100% - 80px);
     margin: 0px 40px;
     padding-right: 10px;
 }
 
+textarea:focus,
 input:focus{
     outline: 3px solid var(--dark-primary-color);
     text-indent: 5px;
@@ -172,11 +183,15 @@ input:focus{
     grid-area: cards;
 }
 
+#progenitor-card {
+    display: none;
+}
+
 .card {
-    height: 190px;
+    height: 230px;
 
     background-color: var(--primary-color);
-    box-shadow: 2px 4px 2px rgb(20, 20, 20);
+    box-shadow: var(--box-shadow);
     
     border-left: 0.8em solid var(--secondary-color);
     border-radius: 10px;
@@ -195,6 +210,7 @@ input:focus{
 }
 
 .card-text > p {
+    margin-top: 5px;
     font-size: 12px;
 }
 
@@ -210,6 +226,18 @@ input:focus{
     cursor: pointer;
 }
 
+.delete:hover {
+    filter: invert(24%) sepia(13%) saturate(3627%) hue-rotate(317deg) brightness(90%) contrast(96%);
+}
+
+.read:hover {
+    filter: invert(53%) sepia(38%) saturate(496%) hue-rotate(57deg) brightness(92%) contrast(91%);
+}
+
+.save:hover {
+    filter: invert(37%) sepia(78%) saturate(463%) hue-rotate(6deg) brightness(99%) contrast(85%);
+}
+
 #bottom-bar {
     display: flex;
     justify-content: space-between;
@@ -220,4 +248,87 @@ input:focus{
     display: grid;
     gap: 15px;
     grid-template-columns: repeat(auto-fit, minmax(30em, 1fr));
+}
+
+dialog {
+    background-color: var(--primary-color);
+    border-color: var(--dark-primary-color);
+    box-shadow: var(--box-shadow);
+
+    width: 50vw;
+    height: 70vh;   
+}
+
+dialog[open] {
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+    align-items: center;
+}
+
+dialog > div {
+    margin: 0px 100px;
+}
+
+#dialogSubmit,
+#dialogClose {
+    background-color: rgb(121, 42, 42);
+    border: none;
+    border-radius: 50px;
+
+    width: 80px;
+    height: 2em;
+
+    font-size: 15px;
+    text-align: center;
+}
+
+#dialogSubmit:hover,
+#dialogClose:hover {
+    background-color: rgb(75, 26, 26);
+    cursor: pointer;
+}
+
+#dialogSubmit {
+    background-color: var(--secondary-color);
+}
+
+dialog > form:invalid #dialogSubmit{
+    cursor: not-allowed;
+}
+
+#dialogSubmit:hover {
+    background-color: var(--dark-secondary-color);
+}
+
+dialog > form > div {
+    display: flex;
+    flex-direction: column;
+}
+
+dialog textarea {
+    resize: none;
+    height: 100px;
+    border-radius: 5px;
+}
+
+dialog > input {
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+}
+
+dialog > form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    width: 100%;
+    padding: 20px 100px;
+    padding-top: 0px;
+}
+
+#dialogButtons {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }
