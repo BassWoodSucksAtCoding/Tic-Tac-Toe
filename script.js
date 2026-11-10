@@ -29,8 +29,10 @@ function placeTile(row, column) {
     tileType = Game.round % 2 === 0 ? "X" : "O";
     const tile = new Tile(tileType, row, column);
 
-    Game.gameArray[tile.row][tile.column] = tile.type;
-
+    if (Game.gameArray[tile.row][tile.column] !== "-") {
+        Game.gameArray[tile.row][tile.column] = tile.type;
+    }
+    
     winCheck.allCheck(tile);
 }
 
@@ -108,5 +110,4 @@ function playGame() {
     }
 }
 
-playGame()
 
