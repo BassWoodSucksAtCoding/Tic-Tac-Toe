@@ -5,6 +5,7 @@
 
   --primary-color: #252525;
   --dark-primary-color: #181818;
+  --light-primary-color: #3f3f3f;
 
   --white-svg: invert(100%) sepia(8%) saturate(32%) hue-rotate(332deg) brightness(108%) contrast(107%);
 
@@ -210,26 +211,23 @@ input:focus{
 #board {
   display: grid;
 
-  grid-template-rows: 1fr 0.1fr 1fr 0.1fr 1fr;
-  grid-template-columns: 1fr 0.1fr 1fr 0.1fr 1fr;;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;;
+
+  background-color: var(--primary-color);
 
   gap: 20px;
-
-  padding: 20px;
+  border-radius: 10px;
 
   height: 300px;
   width: 300px;
 }
 
-
-.row-border {
-    border: 2px solid var(--secondary-color);
-    background-color: var(--secondary-color);
-    grid-column: 1 / -1;
+#board > div {
+    background-color: var(--dark-primary-color);
+    border-radius: 10px;
 }
 
-.column-border {
-    border: 2px solid var(--secondary-color);
-    background-color: var(--secondary-color);
-    grid-row: 1 / -1;
+#board > div:hover {
+    outline: 2px dashed var(--secondary-color);
 }
