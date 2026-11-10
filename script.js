@@ -1,8 +1,6 @@
 class Game{
-    constructor() {
-        this.gameArray = Game.resetGame();
-        this.round = 0;
-    }
+    static gameArray = Game.resetGame();
+    static round = 0;
 
     static winGame(tile) {
         console.log(`${tile.type} won!`);
@@ -29,7 +27,7 @@ class Tile{
 
 function placeTile(row, column) {
     tileType = Game.round % 2 === 0 ? "X" : "O";
-    tile = new Tile(tileType, row, column);
+    const tile = new Tile(tileType, row, column);
 
     Game.gameArray[tile.row][tile.column] = tile.type;
 
@@ -97,6 +95,18 @@ class winCheck {
 
 
 function playGame() {
-    
+    Game.round += 1
+
+    while (Game.round !== 0) {
+        const row = Math.floor(Math.random() * 3)
+        const column = Math.floor(Math.random() * 3)
+
+        Game.round += 1
+        placeTile(Number(row), Number(column))
+
+        console.log(Game.gameArray)
+    }
 }
+
+playGame()
 
