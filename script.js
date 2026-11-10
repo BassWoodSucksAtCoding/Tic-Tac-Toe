@@ -112,7 +112,7 @@ function playGame() {
 
 function alternate() {
     Game.round += 1
-    return Game.round % 2 === 0 ? "Images/x.svg" : "Images/margnify.svg"
+    return Game.round % 2 === 0 ? "Images/x.svg" : "Images/o.svg"
 }
 
 
