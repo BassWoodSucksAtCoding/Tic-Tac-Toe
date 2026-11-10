@@ -110,4 +110,18 @@ function playGame() {
     }
 }
 
+function alternate() {
+    Game.round += 1
+    return Game.round % 2 === 0 ? "Images/x.svg" : "Images/margnify.svg"
+}
 
+
+const tileDivs = document.querySelectorAll("#board > div")
+console.log(tileDivs)
+
+tileDivs.forEach((tile, index) => {
+    tile.addEventListener('click', event => {
+        const image = tile.querySelector("img")
+        image.src = alternate()
+    })
+})
