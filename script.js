@@ -97,31 +97,34 @@ class winCheck {
 
 
 function playGame() {
-    Game.round += 1
+    Game.round += 1;
 
     while (Game.round !== 0) {
-        const row = Math.floor(Math.random() * 3)
-        const column = Math.floor(Math.random() * 3)
+        const row = Math.floor(Math.random() * 3);
+        const column = Math.floor(Math.random() * 3);
 
-        Game.round += 1
-        placeTile(Number(row), Number(column))
+        Game.round += 1;
+        placeTile(Number(row), Number(column));
 
-        console.log(Game.gameArray)
+        console.log(Game.gameArray);
     }
 }
 
 function alternate() {
-    Game.round += 1
-    return Game.round % 2 === 0 ? "Images/x.svg" : "Images/o.svg"
+    Game.round += 1;
+    return Game.round % 2 === 0 ? "Images/x.svg" : "Images/o.svg";
 }
 
 
-const tileDivs = document.querySelectorAll("#board > div")
-console.log(tileDivs)
+const tileDivs = document.querySelectorAll("#board > div");
+console.log(tileDivs);
 
 tileDivs.forEach((tile, index) => {
     tile.addEventListener('click', event => {
-        const image = tile.querySelector("img")
-        image.src = alternate()
+        const image = tile.querySelector("img");
+        console.log(image.src)
+        if (image.src === "") {
+            image.src = alternate();
+        }
     })
 })
