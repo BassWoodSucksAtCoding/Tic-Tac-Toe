@@ -3,6 +3,11 @@ class Game{
         this.gameArray = this.resetGame();
     }
 
+    winGame(tile) {
+        console.log(`${tile.type} won!`);
+        this.resetGame();
+    }
+    
     resetGame = () => {
         return this.gameArray = [
             ["-","-","-"],
@@ -25,7 +30,7 @@ function placeTile(tileType, row, column) {
 
     newGame.gameArray[tile.row][tile.column] = tile.type;
 
-    console.log(winCheck.allCheck(tile))
+    winCheck.allCheck(tile)
 }
 
 
@@ -34,7 +39,7 @@ class winCheck {
     static allCheck(tile){
 
         if (winCheck.horizontalCheck(tile) || winCheck.verticalCheck(tile) || winCheck.leftDiagonalCheck(tile) || winCheck.rightDiagonalCheck(tile)) {
-            return true
+            newGame.winGame(tile)
         }
     }
 
@@ -88,12 +93,13 @@ class winCheck {
 }
 
 
+
 newGame = new Game();
 console.log("HI");
 
-placeTile("O",2,2);
-placeTile("O",1,1);
 placeTile("O",0,0);
+placeTile("O",2,0);
+placeTile("O",1,0);
 
 console.log(newGame.gameArray)
 
