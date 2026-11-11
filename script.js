@@ -37,13 +37,18 @@ class TileManager {
     }
 
     static makeTile(index) {
-        row = Number(Math.floor(index/3));
-        column = Number(index - 3 * row);
+        const row = Number(Math.floor(index/3));
+        const column = Number(index - 3 * row);
 
-        tileType = Game.round % 2 === 0 ? "X" : "O";
+        const tileType = TileManager.alternate();
         const tile = new Tile(tileType, row, column);
 
         return tile;
+    }
+
+    static alternate() {
+        Game.round += 1;
+        return Game.round % 2 === 0 ? "X" : "O";
     }
 }
 
@@ -119,11 +124,6 @@ class winCheck {
 //     }
 // }
 
-function alternate() {
-    Game.round += 1;
-    return Game.round % 2 === 0 ? "Images/x.svg" : "Images/o.svg";
-}
-
 
 const tileDivs = document.querySelectorAll("#board > div");
 
@@ -132,10 +132,11 @@ tileDivs.forEach((tile, index) => {
         const image = tile.querySelector("img");
         console.log(index);
         if (image.src === "") {
-            image.src = alternate();
+            const imageSource = TileManager.alternate();
+            image.src = imageSource === "X" ? "Images/x.svg" : "Images/o.svg";
         }
 
-        tileObj = TileManager.makeTile(index);
+        const tileObj = TileManager.makeTile(index);
         TileManager.placeTile(tileObj);
     })
 })
