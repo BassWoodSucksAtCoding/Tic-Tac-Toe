@@ -28,10 +28,11 @@ class Tile{
 function placeTile(row, column) {
     tileType = Game.round % 2 === 0 ? "X" : "O";
     const tile = new Tile(tileType, row, column);
-
+    console.log(tile.type)
     if (Game.gameArray[tile.row][tile.column] !== "-") {
         Game.gameArray[tile.row][tile.column] = tile.type;
     }
+    console.log(Game.gameArray)
     
     winCheck.allCheck(tile);
 }
@@ -96,19 +97,16 @@ class winCheck {
 }
 
 
-function playGame() {
-    Game.round += 1;
+// function playGame() {
+//     Game.round += 1;
 
-    while (Game.round !== 0) {
-        const row = Math.floor(Math.random() * 3);
-        const column = Math.floor(Math.random() * 3);
+//     while (Game.round !== 0) {
+//         Game.round += 1;
+//         placeTile(Number(row), Number(column));
 
-        Game.round += 1;
-        placeTile(Number(row), Number(column));
-
-        console.log(Game.gameArray);
-    }
-}
+//         console.log(Game.gameArray);
+//     }
+// }
 
 function alternate() {
     Game.round += 1;
@@ -117,14 +115,17 @@ function alternate() {
 
 
 const tileDivs = document.querySelectorAll("#board > div");
-console.log(tileDivs);
 
 tileDivs.forEach((tile, index) => {
     tile.addEventListener('click', event => {
         const image = tile.querySelector("img");
-        console.log(image.src)
+        console.log(index);
         if (image.src === "") {
             image.src = alternate();
         }
+
+        row = Math.floor(index/3)
+        column = index - 3 * row
+        placeTile(row, column)
     })
 })
