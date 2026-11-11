@@ -30,8 +30,11 @@ class TileManager {
 
         tileDivs.forEach((tile, index) => {
             const image = tile.querySelector("img");
-            image.src = ""
+
+            image.removeAttribute("src")
+
             tile.addEventListener('click', event => {
+
                 if (image.src === "") {
                     const imageSource = TileManager.alternate();
                     image.src = imageSource === "X" ? "Images/x.svg" : "Images/o.svg";
@@ -55,7 +58,6 @@ class Game{
     
     static resetGame() {
         Game.round = 0;
-        const tileDivs = document.querySelectorAll("#board > div");
 
         TileManager.tileReset()
         console.log("reset")
