@@ -25,17 +25,28 @@ class Tile{
     }
 }
 
-function placeTile(row, column) {
-    tileType = Game.round % 2 === 0 ? "X" : "O";
-    const tile = new Tile(tileType, row, column);
-    console.log(tile.type)
-    if (Game.gameArray[tile.row][tile.column] !== "-") {
-        Game.gameArray[tile.row][tile.column] = tile.type;
-    }
-    console.log(Game.gameArray)
+class TileManager {
+    static placeTile(tile) {
     
-    winCheck.allCheck(tile);
+        if (Game.gameArray[tile.row][tile.column] !== "-") {
+            Game.gameArray[tile.row][tile.column] = tile.type;
+        }
+        console.log(Game.gameArray)
+        
+        winCheck.allCheck(tile);
+    }
+
+    static makeTile(index) {
+        row = Number(Math.floor(index/3));
+        column = Number(index - 3 * row);
+
+        tileType = Game.round % 2 === 0 ? "X" : "O";
+        const tile = new Tile(tileType, row, column);
+
+        return tile;
+    }
 }
+
 
 
 class winCheck {
@@ -124,8 +135,7 @@ tileDivs.forEach((tile, index) => {
             image.src = alternate();
         }
 
-        row = Math.floor(index/3)
-        column = index - 3 * row
-        placeTile(row, column)
+        tileObj = TileManager.makeTile(index);
+        TileManager.placeTile(tileObj);
     })
 })
