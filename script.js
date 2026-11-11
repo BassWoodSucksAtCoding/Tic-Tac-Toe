@@ -6,9 +6,10 @@ class TileManager {
         }
         
         winCheck.allCheck(tile);
-        TileManager.alternate();
-        console.log(Game.gameArray)
+        
         Game.round += 1;
+        const tileType = TileManager.alternate();
+        Game.changeText(`Round ${Game.round}: ${tileType} turn`);
     }
 
     static makeTile(index) {
@@ -52,21 +53,26 @@ class Game{
     static round = 0;
 
     static winGame(tile) {
-        console.log(`${tile.type} won!`);
-        Game.resetGame();
+        Game.changeText(`${tile.type} won!`);
+        // Game.resetGame();
+        // ^^ Reset with a button later
     }
     
     static resetGame() {
         Game.round = 0;
 
         TileManager.tileReset()
-        console.log("reset")
 
         return Game.gameArray = [
             ["-","-","-"],
             ["-","-","-"],
             ["-","-","-"],
         ];
+    }
+
+    static changeText(text) {
+        const result = document.querySelector("#result");
+        result.textContent = text;
     }
 }
 
