@@ -1,30 +1,3 @@
-class Game{
-    static gameArray = Game.resetGame();
-    static round = 0;
-
-    static winGame(tile) {
-        console.log(`${tile.type} won!`);
-        Game.resetGame();
-    }
-    
-    static resetGame() {
-        Game.round = 0;
-        return Game.gameArray = [
-            ["-","-","-"],
-            ["-","-","-"],
-            ["-","-","-"],
-        ];
-    }
-}
-
-class Tile{
-    constructor(type,row,column) {
-        this.type = type;
-        this.row = row;
-        this.column = column;
-    }
-}
-
 class TileManager {
     static placeTile(tile) {
     
@@ -51,8 +24,57 @@ class TileManager {
     static alternate() {
         return Game.round % 2 === 0 ? "X" : "O";
     }
+
+    static tileReset() {
+        const tileDivs = document.querySelectorAll("#board > div");
+
+        tileDivs.forEach((tile, index) => {
+            const image = tile.querySelector("img");
+            image.src = ""
+            tile.addEventListener('click', event => {
+                if (image.src === "") {
+                    const imageSource = TileManager.alternate();
+                    image.src = imageSource === "X" ? "Images/x.svg" : "Images/o.svg";
+                }
+
+                const tileObj = TileManager.makeTile(index);
+                TileManager.placeTile(tileObj);
+            })
+        })
+    }
 }
 
+class Game{
+    static gameArray = Game.resetGame();
+    static round = 0;
+
+    static winGame(tile) {
+        console.log(`${tile.type} won!`);
+        Game.resetGame();
+    }
+    
+    static resetGame() {
+        Game.round = 0;
+        const tileDivs = document.querySelectorAll("#board > div");
+
+        TileManager.tileReset()
+        console.log("reset")
+
+        return Game.gameArray = [
+            ["-","-","-"],
+            ["-","-","-"],
+            ["-","-","-"],
+        ];
+    }
+}
+
+class Tile{
+    constructor(type,row,column) {
+        this.type = type;
+        this.row = row;
+        this.column = column;
+    }
+}
 
 
 class winCheck {
@@ -126,18 +148,3 @@ class winCheck {
 // }
 
 
-const tileDivs = document.querySelectorAll("#board > div");
-
-tileDivs.forEach((tile, index) => {
-    tile.addEventListener('click', event => {
-        const image = tile.querySelector("img");
-
-        if (image.src === "") {
-            const imageSource = TileManager.alternate();
-            image.src = imageSource === "X" ? "Images/x.svg" : "Images/o.svg";
-        }
-
-        const tileObj = TileManager.makeTile(index);
-        TileManager.placeTile(tileObj);
-    })
-})
