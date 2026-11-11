@@ -28,12 +28,14 @@ class Tile{
 class TileManager {
     static placeTile(tile) {
     
-        if (Game.gameArray[tile.row][tile.column] !== "-") {
+        if (Game.gameArray[tile.row][tile.column] === "-") {
             Game.gameArray[tile.row][tile.column] = tile.type;
         }
-        console.log(Game.gameArray)
         
         winCheck.allCheck(tile);
+        TileManager.alternate();
+        console.log(Game.gameArray)
+        Game.round += 1;
     }
 
     static makeTile(index) {
@@ -47,7 +49,6 @@ class TileManager {
     }
 
     static alternate() {
-        Game.round += 1;
         return Game.round % 2 === 0 ? "X" : "O";
     }
 }
@@ -130,7 +131,7 @@ const tileDivs = document.querySelectorAll("#board > div");
 tileDivs.forEach((tile, index) => {
     tile.addEventListener('click', event => {
         const image = tile.querySelector("img");
-        console.log(index);
+
         if (image.src === "") {
             const imageSource = TileManager.alternate();
             image.src = imageSource === "X" ? "Images/x.svg" : "Images/o.svg";
