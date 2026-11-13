@@ -8,8 +8,9 @@ class TileManager {
         
         
         Game.round += 1;
+       
         const tileType = TileManager.alternate();
-        Game.changeText(`Round ${Game.round}: ${tileType} turn`);
+        Game.changeText(`Round ${Game.round+1}: ${tileType} turn`);
 
         winCheck.allCheck(tile);
     }
@@ -32,11 +33,17 @@ class TileManager {
         const tileDivs = document.querySelectorAll("#board > div");
 
         tileDivs.forEach((tile, index) => {
-            const image = tile.querySelector("img");
+            
+            tile.remove()
 
-            image.removeAttribute("src")
+            const clone = tile.cloneNode(true);
+            const board = document.querySelector("#board");
+            board.appendChild(clone);
 
-            tile.addEventListener('click', event => {
+            const image = clone.querySelector("img");
+            image.removeAttribute("src");
+
+            clone.addEventListener('click', event => {
 
                 if (image.src === "") {
                     const imageSource = TileManager.alternate();
@@ -64,6 +71,7 @@ class Game{
         Game.round = 0;
 
         TileManager.tileReset()
+        Game.changeText(`Click on the board to start playing`);
 
         return Game.gameArray = [
             ["-","-","-"],
@@ -145,16 +153,10 @@ class winCheck {
     }
 }
 
+const newButton = document.querySelector("#New")
+newButton.addEventListener('click', event => {
+    Game.resetGame();
+})
 
-// function playGame() {
-//     Game.round += 1;
-
-//     while (Game.round !== 0) {
-//         Game.round += 1;
-//         placeTile(Number(row), Number(column));
-
-//         console.log(Game.gameArray);
-//     }
-// }
 
 
