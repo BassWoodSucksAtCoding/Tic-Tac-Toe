@@ -31,16 +31,16 @@ class TileManager {
         const tileDivs = document.querySelectorAll("#board > div");
 
         tileDivs.forEach((tile, index) => {
+            const image = tile.querySelector("img");
+            image.removeAttribute("src");
             tile.addEventListener('click', event => {
-                const image = tile.querySelector("img");
 
                 if (image.src === "") {
                     const imageSource = TileManager.alternate();
                     image.src = imageSource === "X" ? "Images/x.svg" : "Images/o.svg";
+                    const tileObj = TileManager.makeTile(index);
+                    TileManager.placeTile(tileObj);
                 }
-
-                const tileObj = TileManager.makeTile(index);
-                TileManager.placeTile(tileObj);
             })
         })
     }
@@ -55,9 +55,6 @@ class TileManager {
             const clone = tile.cloneNode(true);
             const board = document.querySelector("#board");
             board.appendChild(clone);
-
-            const image = clone.querySelector("img");
-            image.removeAttribute("src");
         })
     }
 }
@@ -68,6 +65,7 @@ class Game{
 
     static winGame(tile) {
         Game.changeText(`${tile.type} won!`);
+        TileManager.cloneMaker();
         // Game.resetGame();
         // ^^ Reset with a button later
     }
