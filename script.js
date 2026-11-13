@@ -4,13 +4,21 @@ class TileManager {
         if (Game.gameArray[tile.row][tile.column] === "-") {
             Game.gameArray[tile.row][tile.column] = tile.type;
         }
-                
-        Game.round += 1;
-       
-        const tileType = TileManager.alternate();
-        Game.changeText(`Round ${Game.round+1}: ${tileType} turn`);
 
-        winCheck.allCheck(tile);
+             
+        Game.round += 1;
+        
+        if (Game.round < 9) {
+            const tileType = TileManager.alternate();
+            Game.changeText(`Round ${Game.round+1}: ${tileType} turn`);
+        } else {
+            const win = winCheck.allCheck(tile);
+            if (win === false) {
+                Game.changeText(`Tie!`);
+            }
+            
+        }
+        
     }
 
     static makeTile(index) {
@@ -104,7 +112,10 @@ class winCheck {
 
         if (winCheck.horizontalCheck(tile) || winCheck.verticalCheck(tile) || winCheck.leftDiagonalCheck(tile) || winCheck.rightDiagonalCheck(tile)) {
             Game.winGame(tile);
+            return true;
         }
+
+        return false;
     }
 
     static horizontalCheck(tile) {
