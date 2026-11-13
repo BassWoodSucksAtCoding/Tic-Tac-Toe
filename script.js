@@ -31,7 +31,8 @@ class TileManager {
         const tileDivs = document.querySelectorAll("#board > div");
 
         tileDivs.forEach((tile, index) => {
-            clone.addEventListener('click', event => {
+            tile.addEventListener('click', event => {
+                const image = tile.querySelector("img");
 
                 if (image.src === "") {
                     const imageSource = TileManager.alternate();
