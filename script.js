@@ -5,11 +5,13 @@ class TileManager {
             Game.gameArray[tile.row][tile.column] = tile.type;
         }
         
-        winCheck.allCheck(tile);
+        
         
         Game.round += 1;
         const tileType = TileManager.alternate();
         Game.changeText(`Round ${Game.round}: ${tileType} turn`);
+
+        winCheck.allCheck(tile);
     }
 
     static makeTile(index) {
