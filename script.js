@@ -4,9 +4,7 @@ class TileManager {
         if (Game.gameArray[tile.row][tile.column] === "-") {
             Game.gameArray[tile.row][tile.column] = tile.type;
         }
-        
-        
-        
+                
         Game.round += 1;
        
         const tileType = TileManager.alternate();
@@ -33,16 +31,6 @@ class TileManager {
         const tileDivs = document.querySelectorAll("#board > div");
 
         tileDivs.forEach((tile, index) => {
-            
-            tile.remove()
-
-            const clone = tile.cloneNode(true);
-            const board = document.querySelector("#board");
-            board.appendChild(clone);
-
-            const image = clone.querySelector("img");
-            image.removeAttribute("src");
-
             clone.addEventListener('click', event => {
 
                 if (image.src === "") {
@@ -53,6 +41,22 @@ class TileManager {
                 const tileObj = TileManager.makeTile(index);
                 TileManager.placeTile(tileObj);
             })
+        })
+    }
+
+    static cloneMaker() {
+        const tileDivs = document.querySelectorAll("#board > div");
+
+        tileDivs.forEach((tile, index) => {
+            
+            tile.remove()
+
+            const clone = tile.cloneNode(true);
+            const board = document.querySelector("#board");
+            board.appendChild(clone);
+
+            const image = clone.querySelector("img");
+            image.removeAttribute("src");
         })
     }
 }
