@@ -1,176 +1,176 @@
-class TileManager {
-    static placeTile(tile) {
-    
-        if (Game.gameArray[tile.row][tile.column] === "-") {
-            Game.gameArray[tile.row][tile.column] = tile.type;
-        }
-
-             
-        Game.round += 1;
+(() => {
+    class TileManager {
+        static placeTile(tile) {
         
-        if (Game.round < 9) {
-            const tileType = TileManager.alternate();
-            Game.changeText(`Round ${Game.round+1}: ${tileType} turn`);
-        } else {
-            const win = winCheck.allCheck(tile);
-            if (win === false) {
-                Game.changeText(`Tie!`);
+            if (Game.gameArray[tile.row][tile.column] === "-") {
+                Game.gameArray[tile.row][tile.column] = tile.type;
+            }
+
+                
+            Game.round += 1;
+            
+            if (Game.round < 9) {
+                const tileType = TileManager.alternate();
+                Game.changeText(`Round ${Game.round+1}: ${tileType} turn`);
+            } else {
+                const win = winCheck.allCheck(tile);
+                if (win === false) {
+                    Game.changeText(`Tie!`);
+                }
+                
             }
             
         }
-        
-    }
 
-    static makeTile(index) {
-        const row = Number(Math.floor(index/3));
-        const column = Number(index - 3 * row);
+        static makeTile(index) {
+            const row = Number(Math.floor(index/3));
+            const column = Number(index - 3 * row);
 
-        const tileType = TileManager.alternate();
-        const tile = new Tile(tileType, row, column);
+            const tileType = TileManager.alternate();
+            const tile = new Tile(tileType, row, column);
 
-        return tile;
-    }
+            return tile;
+        }
 
-    static alternate() {
-        return Game.round % 2 === 0 ? "X" : "O";
-    }
+        static alternate() {
+            return Game.round % 2 === 0 ? "X" : "O";
+        }
 
-    static tileReset() {
-        const tileDivs = document.querySelectorAll("#board > div");
+        static tileReset() {
+            const tileDivs = document.querySelectorAll("#board > div");
 
-        tileDivs.forEach((tile, index) => {
-            const image = tile.querySelector("img");
-            image.removeAttribute("src");
-            tile.addEventListener('click', event => {
+            tileDivs.forEach((tile, index) => {
+                const image = tile.querySelector("img");
+                image.removeAttribute("src");
+                tile.addEventListener('click', event => {
 
-                if (image.src === "") {
-                    const imageSource = TileManager.alternate();
-                    image.src = imageSource === "X" ? "Images/x.svg" : "Images/o.svg";
-                    const tileObj = TileManager.makeTile(index);
-                    TileManager.placeTile(tileObj);
-                }
+                    if (image.src === "") {
+                        const imageSource = TileManager.alternate();
+                        image.src = imageSource === "X" ? "Images/x.svg" : "Images/o.svg";
+                        const tileObj = TileManager.makeTile(index);
+                        TileManager.placeTile(tileObj);
+                    }
+                })
             })
-        })
+        }
+
+        static cloneMaker() {
+            const tileDivs = document.querySelectorAll("#board > div");
+
+            tileDivs.forEach((tile, index) => {
+                
+                tile.remove()
+
+                const clone = tile.cloneNode(true);
+                const board = document.querySelector("#board");
+                board.appendChild(clone);
+            })
+        }
     }
 
-    static cloneMaker() {
-        const tileDivs = document.querySelectorAll("#board > div");
+    class Game{
+        static gameArray = Game.resetGame();
+        static round = 0;
 
-        tileDivs.forEach((tile, index) => {
-            
-            tile.remove()
+        static winGame(tile) {
+            Game.changeText(`${tile.type} won!`);
+            TileManager.cloneMaker();
+            // Game.resetGame();
+            // ^^ Reset with a button later
+        }
+        
+        static resetGame() {
+            Game.round = 0;
 
-            const clone = tile.cloneNode(true);
-            const board = document.querySelector("#board");
-            board.appendChild(clone);
-        })
-    }
-}
+            TileManager.tileReset()
+            Game.changeText(`Click on the board to start playing`);
 
-class Game{
-    static gameArray = Game.resetGame();
-    static round = 0;
+            return Game.gameArray = [
+                ["-","-","-"],
+                ["-","-","-"],
+                ["-","-","-"],
+            ];
+        }
 
-    static winGame(tile) {
-        Game.changeText(`${tile.type} won!`);
-        TileManager.cloneMaker();
-        // Game.resetGame();
-        // ^^ Reset with a button later
-    }
-    
-    static resetGame() {
-        Game.round = 0;
-
-        TileManager.tileReset()
-        Game.changeText(`Click on the board to start playing`);
-
-        return Game.gameArray = [
-            ["-","-","-"],
-            ["-","-","-"],
-            ["-","-","-"],
-        ];
+        static changeText(text) {
+            const result = document.querySelector("#result");
+            result.textContent = text;
+        }
     }
 
-    static changeText(text) {
-        const result = document.querySelector("#result");
-        result.textContent = text;
+    class Tile{
+        constructor(type,row,column) {
+            this.type = type;
+            this.row = row;
+            this.column = column;
+        }
     }
-}
-
-class Tile{
-    constructor(type,row,column) {
-        this.type = type;
-        this.row = row;
-        this.column = column;
-    }
-}
 
 
-class winCheck {
+    class winCheck {
 
-    static allCheck(tile){
+        static allCheck(tile){
 
-        if (winCheck.horizontalCheck(tile) || winCheck.verticalCheck(tile) || winCheck.leftDiagonalCheck(tile) || winCheck.rightDiagonalCheck(tile)) {
-            Game.winGame(tile);
+            if (winCheck.horizontalCheck(tile) || winCheck.verticalCheck(tile) || winCheck.leftDiagonalCheck(tile) || winCheck.rightDiagonalCheck(tile)) {
+                Game.winGame(tile);
+                return true;
+            }
+
+            return false;
+        }
+
+        static horizontalCheck(tile) {
+            const oneRow = Game.gameArray[tile.row];
+
+            for (const element of oneRow) {
+                if (element === tile.type) {
+                    continue;
+                }
+                return false;
+            }
             return true;
         }
 
-        return false;
-    }
+        static verticalCheck(tile) {
+            const oneCol = Game.gameArray.map(oneRow => oneRow[tile.column]);
 
-    static horizontalCheck(tile) {
-        const oneRow = Game.gameArray[tile.row];
-
-        for (const element of oneRow) {
-            if (element === tile.type) {
-                continue;
+            for (const element of oneCol) {
+                if (element === tile.type) {
+                    continue;
+                }
+                return false;
             }
-            return false;
+            return true;
         }
-        return true;
-    }
 
-    static verticalCheck(tile) {
-        const oneCol = Game.gameArray.map(oneRow => oneRow[tile.column]);
+        static rightDiagonalCheck(tile) {
+            const rightDiagonal = Game.gameArray.map((row,index) => row[index]);
 
-        for (const element of oneCol) {
-            if (element === tile.type) {
-                continue;
+            for (const element of rightDiagonal) {
+                if (element === tile.type) {
+                    continue;
+                }
+                return false;
             }
-            return false;
+            return true;
         }
-        return true;
-    }
 
-    static rightDiagonalCheck(tile) {
-        const rightDiagonal = Game.gameArray.map((row,index) => row[index]);
+        static leftDiagonalCheck(tile) {
+            const leftDiagonal = Game.gameArray.map((row,index) => row[2 - index]);
 
-        for (const element of rightDiagonal) {
-            if (element === tile.type) {
-                continue;
+            for (const element of leftDiagonal) {
+                if (element === tile.type) {
+                    continue;
+                }
+                return false;
             }
-            return false;
+            return true;
         }
-        return true;
     }
 
-    static leftDiagonalCheck(tile) {
-        const leftDiagonal = Game.gameArray.map((row,index) => row[2 - index]);
-
-        for (const element of leftDiagonal) {
-            if (element === tile.type) {
-                continue;
-            }
-            return false;
-        }
-        return true;
-    }
-}
-
-const newButton = document.querySelector("#New")
-newButton.addEventListener('click', event => {
-    Game.resetGame();
-})
-
-
+    const newButton = document.querySelector("#New")
+    newButton.addEventListener('click', event => {
+        Game.resetGame();
+    })
+})();
 
