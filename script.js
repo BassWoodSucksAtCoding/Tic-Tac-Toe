@@ -8,18 +8,16 @@
 
                 
             Game.round += 1;
-            
-            if (Game.round < 9) {
-                const tileType = TileManager.alternate();
-                Game.changeText(`Round ${Game.round+1}: ${tileType} turn`);
-            } else {
-                const win = winCheck.allCheck(tile);
-                if (win === false) {
-                    Game.changeText(`Tie!`);
+            const win = winCheck.allCheck(tile);
+
+            if (win === false) {
+                if (Game.round < 9) {
+                    const tileType = TileManager.alternate();
+                    Game.changeText(`Round ${Game.round+1}: ${tileType} turn`);
+                } else {
+                    Game.changeText(`Tie!`);                    
                 }
-                
             }
-            
         }
 
         static makeTile(index) {
