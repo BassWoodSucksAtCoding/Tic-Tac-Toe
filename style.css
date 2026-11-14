@@ -136,9 +136,7 @@ input:focus{
 }
 
 #buttons {
-    display: grid;
-    gap: 15px;
-    grid-template-columns: repeat(3, minmax(25px, 1fr));
+    display: flex;
 }
 
 #buttons > button{
@@ -146,10 +144,10 @@ input:focus{
     border: none;
     border-radius: 50px;
 
-    width: 80px;
-    height: 2em;
+    width: 200px;
+    height: 80px;
 
-    font-size: 15px;
+    font-size: 30px;
     text-align: center;
 }
 
